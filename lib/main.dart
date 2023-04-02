@@ -1,6 +1,11 @@
+import 'package:e_commerce/auth/page/login_page.dart';
+import 'package:e_commerce/auth/page/profile_page.dart';
+import 'package:e_commerce/category/page/category_page.dart';
 import 'package:e_commerce/screen/account_screen.dart';
 import 'package:e_commerce/screen/cart_screen.dart';
 import 'package:e_commerce/screen/home_screen.dart';
+import 'package:e_commerce/util/app_color.dart';
+import 'package:e_commerce/util/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,17 +14,16 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'controller/cart_controller_provider.dart';
+import 'auth/page/register_page.dart';
 import 'data/local/data_model.dart';
 import 'data/local/database_service.dart';
 import 'firebase_options.dart';
 
-
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFFFF1744)
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: AppColor.primaryColor));
   await Hive.initFlutter();
   Hive.registerAdapter<DataModel>(DataModelAdapter());
   Hive.registerAdapter<LocalImage>(LocalImageAdapter());
@@ -32,9 +36,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
-
-  runApp( Phoenix(child: ProviderScope(overrides: [databaseService.overrideWithValue(_databaseService)],child: const MyApp())));
+  runApp(Phoenix(
+      child: ProviderScope(
+          overrides: [databaseService.overrideWithValue(_databaseService)],
+          child: const MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,18 +52,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.redAccent.shade400 ,
-            secondary: const Color(0xFFf73838), // Your accent color
-          ),
-        ),
+        theme: AppTheme.themeData,
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
   }
 }
-
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -66,18 +65,18 @@ class MyHomePage extends ConsumerStatefulWidget {
   final String title;
 
   @override
-  ConsumerState <MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-
   int _selectedItemIndex = 0;
-  final screens =  [
+  final screens = [
     HomeScreen(),
+    const CategoryPage(),
     const CartScreen(),
-    const AccountScreen(),
-
+    const ProfilePage(),
   ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -87,7 +86,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   void initialize() async {
     /// here we will add a wait second to move on next scree
-    await Future.delayed (const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     FlutterNativeSplash.remove();
   }
 
@@ -107,28 +106,32 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     );
   }
 
-  Widget _bottomNavigationBar(List<DataModel> cartBox ) {
+  Widget _bottomNavigationBar(List<DataModel> cartBox) {
     return BottomNavigationBar(
         currentIndex: _selectedItemIndex,
-        selectedItemColor: Colors.white,
-        showUnselectedLabels: true,
-        unselectedItemColor: Colors.white60,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        items:  <BottomNavigationBarItem>[
+        // selectedItemColor: Colors.white,
+        // showUnselectedLabels: true,
+        // unselectedItemColor: Colors.white60,
+        // backgroundColor: Theme.of(context).colorScheme.primary,
+        items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
             //backgroundColor: Colors.deepPurple,
           ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Category',
+          ),
           BottomNavigationBarItem(
-            icon: cartBox.isNotEmpty? Badge(
-                label: Text("${cartBox.length}"),
-                backgroundColor: Colors.white,
-                child: const Icon(Icons.shopping_cart)):
-            const Icon( Icons.shopping_cart),
+            icon: cartBox.isNotEmpty
+                ? Badge(
+                    label: Text("${cartBox.length}"),
+                    backgroundColor: Colors.white,
+                    child: const Icon(Icons.shopping_cart))
+                : const Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
-
           const BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

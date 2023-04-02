@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_commerce/category/controller/product_category_controller.dart';
 import 'package:e_commerce/screen/product_detail_screen.dart';
 import 'package:e_commerce/screen/search_screen.dart';
+import 'package:e_commerce/util/app_theme.dart';
+import 'package:e_commerce/util/asset_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -40,136 +43,136 @@ class HomeScreen extends ConsumerWidget {
       }
     });
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          width: double.infinity,
-          height: 40,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(5)),
-          child: Center(
-            child: TextField(
-              controller: searchEditingController,
-              // enabled: false,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  // suffixIcon: IconButton(
-                  //   icon: const Icon(Icons.clear),
-                  //   onPressed: () {
-                  //     /* Clear the search field */
-                  //   },
-                  // ),
-                  hintText: 'Search...',
-                  border: InputBorder.none),
+        appBar: AppBar(
+          title: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: TextField(
+                controller: searchEditingController,
+                // enabled: false,
+                decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    // suffixIcon: IconButton(
+                    //   icon: const Icon(Icons.clear),
+                    //   onPressed: () {
+                    //     /* Clear the search field */
+                    //   },
+                    // ),
+                    hintText: 'Search...',
+                    border: InputBorder.none),
+              ),
             ),
           ),
+          actions: [
+            InkWell(
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (searchEditingController.text.isEmpty) {
+                    // Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text('Enter text')));
+                  } else {
+                    searchEditingController.value == "";
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchDetailScreen(
+                                searchEditingController.text)));
+                  }
+                },
+                child: const Center(
+                    child: Text(
+                  "Search",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ))),
+            const SizedBox(
+              width: 16,
+            )
+          ],
         ),
-        actions: [
-          InkWell(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-                if (searchEditingController.text.isEmpty) {
-                  // Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      backgroundColor: Colors.red,
-                      content: Text('Enter text')));
-                } else {
-                  searchEditingController.value == "";
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchDetailScreen(
-                              searchEditingController.text)));
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Consumer(
+            builder: (ctx, watch, child) {
+              final isLoadMoreError =
+                  ref.watch(productsProvider).isLoadMoreError;
+              final isLoadMoreDone = ref.watch(productsProvider).isLoadMoreDone;
+              final isLoading = ref.watch(productsProvider).isLoading;
+              final products = ref.watch(productsProvider).products;
+              // sync oldLength with post.length to make sure ListView has newest
+              // data, so loadMore will work correctly
+              oldLength = products?.length ?? 0;
+              // init data or error
+              if (products == null) {
+                // error case
+                if (isLoading == false) {
+                  return const Center(
+                    child: Text('error'),
+                  );
                 }
-              },
-              child: const Center(
-                  child: Text(
-                "Search",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))),
-          const SizedBox(
-            width: 16,
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Consumer(
-          builder: (ctx, watch, child) {
-            final isLoadMoreError = ref.watch(productsProvider).isLoadMoreError;
-            final isLoadMoreDone = ref.watch(productsProvider).isLoadMoreDone;
-            final isLoading = ref.watch(productsProvider).isLoading;
-            final products = ref.watch(productsProvider).products;
-            // sync oldLength with post.length to make sure ListView has newest
-            // data, so loadMore will work correctly
-            oldLength = products?.length ?? 0;
-            // init data or error
-            if (products == null) {
-              // error case
-              if (isLoading == false) {
-                return const Center(
-                  child: Text('error'),
-                );
+                return Center(child: loading());
               }
-              return Center(child: loading());
-            }
-            return RefreshIndicator(
-              onRefresh: () {
-                return ref.read(productsProvider.notifier).refresh();
-              },
-              child: CustomScrollView(
-                  controller: scrollController,
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  //shrinkWrap: true,
-                  slivers: <Widget>[
-                    const SliverToBoxAdapter(
-                      child: BannerWidget(),
-                    ),
-                    const SliverToBoxAdapter(
-                      child: CategoryWidget(),
-                    ),
-                    SliverGrid(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 300.0,
-                          mainAxisSpacing: 0.0,
-                          crossAxisSpacing: 0.0,
-                          childAspectRatio: 0.7,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: products.length + 1, (ctx, index) {
-                          print("index $index");
-                          print("length ${products.length}");
-                          if (index == products.length) {
-                            // load more and get error
-                            if (isLoadMoreError) {
-                              return const Center(
-                                child: Text('Error'),
-                              );
+              return RefreshIndicator(
+                onRefresh: () {
+                  return ref.read(productsProvider.notifier).refresh();
+                },
+                child: CustomScrollView(
+                    controller: scrollController,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    //shrinkWrap: true,
+                    slivers: <Widget>[
+                      const SliverToBoxAdapter(
+                        child: BannerWidget(),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: CategoryWidget(),
+                      ),
+                      SliverGrid(
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 300.0,
+                            mainAxisSpacing: 0.0,
+                            crossAxisSpacing: 0.0,
+                            childAspectRatio: 0.7,
+                          ),
+                          delegate: SliverChildBuilderDelegate(
+                              childCount: products.length + 1, (ctx, index) {
+                            print("index $index");
+                            print("length ${products.length}");
+                            if (index == products.length) {
+                              // load more and get error
+                              if (isLoadMoreError) {
+                                return const Center(
+                                  child: Text('Error'),
+                                );
+                              }
+                              // load more but reached to the last element
+                              if (isLoadMoreDone) {
+                                return const Center(
+                                  child: Text(
+                                    'Done!',
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 20),
+                                  ),
+                                );
+                              }
+                              return loading();
                             }
-                            // load more but reached to the last element
-                            if (isLoadMoreDone) {
-                              return const Center(
-                                child: Text(
-                                  'Done!',
-                                  style: TextStyle(
-                                      color: Colors.green, fontSize: 20),
-                                ),
-                              );
-                            }
-                            return loading();
-                          }
-                          // last element (progress bar, error or 'Done!' if reached to the last element)
-                          return ProductListWidget(products[index]);
-                        }))
-                  ]),
-            );
-            // return
-          },
+                            // last element (progress bar, error or 'Done!' if reached to the last element)
+                            return ProductListWidget(products[index]);
+                          }))
+                    ]),
+              );
+              // return
+            },
+          ),
         ),
-      ),
-      floatingActionButton:  CustomFab(scrollController)
-    );
+        floatingActionButton: CustomFab(scrollController));
   }
 }
 
@@ -219,39 +222,39 @@ class _BannerWidgetState extends ConsumerState<BannerWidget> {
                   ),
                   items: imageList
                       .map(
-                        (item) => Container(
-                            margin: const EdgeInsets.all(3.0),
-                            child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(5.0)),
-                                child: CachedNetworkImage(
-                                    imageUrl: item,
-                                    placeholder: (context, url) => loading(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                    fit: BoxFit.cover,
-                                    width: 1000.0))),
+                        (item) => Card(
+                          child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(5.0)),
+                              child: CachedNetworkImage(
+                                  imageUrl: item,
+                                  placeholder: (context, url) => loading(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                  fit: BoxFit.fill,
+                                  width: 1000.0)),
+                        ),
                       )
                       .toList(),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: imageList.map((url) {
-                    int index = imageList.indexOf(url);
-                    return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 2.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _current == index
-                            ? const Color.fromRGBO(0, 0, 0, 0.9)
-                            : const Color.fromRGBO(0, 0, 0, 0.4),
-                      ),
-                    );
-                  }).toList(),
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: imageList.map((url) {
+                //     int index = imageList.indexOf(url);
+                //     return Container(
+                //       width: 8.0,
+                //       height: 8.0,
+                //       margin: const EdgeInsets.symmetric(
+                //           vertical: 10.0, horizontal: 2.0),
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         color: _current == index
+                //             ? const Color.fromRGBO(0, 0, 0, 0.9)
+                //             : const Color.fromRGBO(0, 0, 0, 0.4),
+                //       ),
+                //     );
+                //   }).toList(),
+                // )
               ],
             ),
           );
@@ -269,80 +272,130 @@ class CategoryWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<List<Category>>(slugIdStateProvider, (previous, next) async {
-      print("click category ${next.first}");
-      if (next == []) {
-        return;
-      }
-
-      ///close loading
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CategoryDetailScreen(next.first)));
-    });
-    return Card(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: _buildEachCategory("Bdsm",
-                      () => gotoCategoryDetail(context, ref, "sex-accessory"))),
-              Expanded(
-                  child: _buildEachCategory("နောက်ပေါက်",
-                      () => gotoCategoryDetail(context, ref, "anal"))),
-              Expanded(
-                  child: _buildEachCategory("ကွန်ဒုံ",
-                      () => gotoCategoryDetail(context, ref, "condom"))),
-              Expanded(
-                  child: _buildEachCategory("ကျားတု",
-                      () => gotoCategoryDetail(context, ref, "Dildo"))),
-              Expanded(
-                  child: _buildEachCategory("ချောဆီ",
-                      () => gotoCategoryDetail(context, ref, "lubricant-gel"))),
-            ],
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: _buildEachCategory(
-                      "မတု",
-                      () => gotoCategoryDetail(
-                          context, ref, "masturbation-cup"))),
-              Expanded(
-                  child: _buildEachCategory("ဆေး",
-                      () => gotoCategoryDetail(context, ref, "medicines"))),
-              Expanded(
-                  child: _buildEachCategory(
-                      "ပြောင်း",
-                      () => gotoCategoryDetail(
-                          context, ref, "enlargement-pump "))),
-              Expanded(
-                  child: _buildEachCategory("တုန်ခါစက်",
-                      () => gotoCategoryDetail(context, ref, "vibrator"))),
-              Expanded(
-                  child: _buildEachCategory("အားလုံး", () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CategoryScreen()));
-              })),
-            ],
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-        ],
-      ),
-    );
+    final categoryState = ref.watch(productCategoryController);
+    return categoryState.when(
+        data: (data) {
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8.0,),
+                  Text("Categories",style: AppTextStyle.titleTextStyle,),
+                  const SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 108,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          final category = data[index];
+                          return SizedBox(
+                            width: 120.0,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 80,
+                                  height: 80,
+                                  decoration:  BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: NetworkImage(category.image!.src.toString()),
+                                        //image: AssetImage(AssetString.logo),
+                                        fit: BoxFit.fill
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0,),
+                                Text(category.name ?? ""),
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        error: (error, stack) => Text("$error"),
+        loading: () => loading());
+    // ref.listen<List<Category>>(slugIdStateProvider, (previous, next) async {
+    //   print("click category ${next.first}");
+    //   if (next == []) {
+    //     return;
+    //   }
+    //
+    //   ///close loading
+    //   Navigator.pop(context);
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => CategoryDetailScreen(next.first)));
+    // });
+    // return Card(
+    //   child: Column(
+    //     children: [
+    //       const SizedBox(
+    //         height: 16.0,
+    //       ),
+    //       Row(
+    //         children: [
+    //           Expanded(
+    //               child: _buildEachCategory("Bdsm",
+    //                   () => gotoCategoryDetail(context, ref, "sex-accessory"))),
+    //           Expanded(
+    //               child: _buildEachCategory("နောက်ပေါက်",
+    //                   () => gotoCategoryDetail(context, ref, "anal"))),
+    //           Expanded(
+    //               child: _buildEachCategory("ကွန်ဒုံ",
+    //                   () => gotoCategoryDetail(context, ref, "condom"))),
+    //           Expanded(
+    //               child: _buildEachCategory("ကျားတု",
+    //                   () => gotoCategoryDetail(context, ref, "Dildo"))),
+    //           Expanded(
+    //               child: _buildEachCategory("ချောဆီ",
+    //                   () => gotoCategoryDetail(context, ref, "lubricant-gel"))),
+    //         ],
+    //       ),
+    //       const SizedBox(
+    //         height: 16.0,
+    //       ),
+    //       Row(
+    //         children: [
+    //           Expanded(
+    //               child: _buildEachCategory(
+    //                   "မတု",
+    //                   () => gotoCategoryDetail(
+    //                       context, ref, "masturbation-cup"))),
+    //           Expanded(
+    //               child: _buildEachCategory("ဆေး",
+    //                   () => gotoCategoryDetail(context, ref, "medicines"))),
+    //           Expanded(
+    //               child: _buildEachCategory(
+    //                   "ပြောင်း",
+    //                   () => gotoCategoryDetail(
+    //                       context, ref, "enlargement-pump "))),
+    //           Expanded(
+    //               child: _buildEachCategory("တုန်ခါစက်",
+    //                   () => gotoCategoryDetail(context, ref, "vibrator"))),
+    //           Expanded(
+    //               child: _buildEachCategory("အားလုံး", () {
+    //             Navigator.push(
+    //                 context,
+    //                 MaterialPageRoute(
+    //                     builder: (context) => const CategoryScreen()));
+    //           })),
+    //         ],
+    //       ),
+    //       const SizedBox(
+    //         height: 16.0,
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   void gotoCategoryDetail(BuildContext context, WidgetRef ref, String slug) {
@@ -384,7 +437,7 @@ class ProductListWidget extends ConsumerWidget {
             Expanded(
               child: CachedNetworkImage(
                 imageUrl: '${product.images?.first.src}',
-                placeholder: (context, url) => Image.asset('assets/logo.png'),
+                placeholder: (context, url) => Image.asset(AssetString.logo),
                 fit: BoxFit.cover,
               ),
             ),
@@ -437,7 +490,9 @@ class CustomFab extends StatefulWidget {
   @override
   State<CustomFab> createState() => _CustomFabState();
 }
+
 bool isVisible = true;
+
 class _CustomFabState extends State<CustomFab> {
   @override
   void initState() {
@@ -469,14 +524,15 @@ class _CustomFabState extends State<CustomFab> {
       visible: isVisible,
       child: InkWell(
           onTap: () async {
-            final Uri launchUri = Uri.parse("https://m.me/MMonlineshoppingmed/");
+            final Uri launchUri =
+                Uri.parse("https://m.me/MMonlineshoppingmed/");
             if (await canLaunchUrl(launchUri)) {
-            await launchUrl(launchUri);
+              await launchUrl(launchUri);
             } else {
-            throw 'Could not launch $launchUri';
+              throw 'Could not launch $launchUri';
             }
           },
-          child: Image.asset("assets/messenger.png")),
+          child: SizedBox(width: 50,height:50,child: Image.asset(AssetString.messenger,))),
     );
   }
 }

@@ -24,7 +24,7 @@ class Repository {
     List<Product> _list = [];
     final dio = ref.watch(dioProvider);
     try {
-      final response = await dio.get('/products', queryParameters: queryParam);
+      final response = await dio.get('/wp-json/wc/v3/products', queryParameters: queryParam);
       if (response.statusCode == 200 && response.data != null) {
         response.data.forEach((e) {
           _list.add(Product.fromJson(e));
@@ -44,7 +44,7 @@ class Repository {
     List<Product> list = [];
     final dio = ref.watch(dioProvider);
     try {
-      final response = await dio.get('/products', queryParameters: queryParam);
+      final response = await dio.get('/wp-json/wc/v3/products', queryParameters: queryParam);
       if (response.statusCode == 200 && response.data != null) {
         response.data.forEach((e) {
           list.add(Product.fromJson(e));
@@ -63,7 +63,7 @@ class Repository {
     final dio = ref.watch(dioProvider);
 
     try {
-      final response = await dio.post('/orders', data: order.toJson());
+      final response = await dio.post('/wp-json/wc/v3/orders', data: order.toJson());
       //if (response.statusCode == 200 && response.data != null) {
       return Order.fromJson(response.data);
       // }
@@ -82,7 +82,7 @@ class Repository {
     final dio = ref.watch(dioProvider);
     List<Category> list = [];
     try {
-      final response = await dio.get('/products/categories');
+      final response = await dio.get('/wp-json/wc/v3/products/categories');
       if (response.statusCode == 200 && response.data != null) {
         response.data.forEach((e) {
           list.add(Category.fromJson(e));
@@ -102,7 +102,7 @@ class Repository {
     List<Product> list = [];
     final dio = ref.watch(dioProvider);
     try {
-      final response = await dio.get('/products', queryParameters: queryParam);
+      final response = await dio.get('/wp-json/wc/v3/products', queryParameters: queryParam);
       if (response.statusCode == 200 && response.data != null) {
         response.data.forEach((e) {
           list.add(Product.fromJson(e));
@@ -119,7 +119,7 @@ class Repository {
     List<Product> list = [];
     final dio = ref.watch(dioProvider);
     try {
-      final response = await dio.get('/products', queryParameters: queryParam);
+      final response = await dio.get('/wp-json/wc/v3/products', queryParameters: queryParam);
       if (response.statusCode == 200 && response.data != null) {
         response.data.forEach((e) {
           list.add(Product.fromJson(e));

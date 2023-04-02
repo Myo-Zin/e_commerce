@@ -110,14 +110,14 @@ class FirebaseController extends ChangeNotifier {
         .delete()
         .then((value) {
       ref.read(successOrFailDeleteController.notifier).state = true;
-      ref.refresh(sharedPreferencesProvider).clear();
+      //ref.refresh(sharedPreferencesProvider).clear();
       FirebaseAuth.instance.signOut();
       print("Successfully delete");
     }).catchError((error) {
       ref.read(successOrFailDeleteController.notifier).state = false;
       print("Failed to delete user: $error");
     });
-    await shareRef.clear();
+   // await shareRef.clear();
     notifyListeners();
 
   }

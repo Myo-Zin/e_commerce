@@ -1,6 +1,6 @@
 
-class Customer {
-  Customer({
+class RegisterResponse {
+  RegisterResponse({
       this.id,
       this.email, 
       this.firstName, 
@@ -9,7 +9,7 @@ class Customer {
       this.username, 
    });
 
-  Customer.fromJson(dynamic json) {
+  RegisterResponse.fromJson(dynamic json) {
     id = json['id'];
     email = json['email'];
     firstName = json['first_name'];

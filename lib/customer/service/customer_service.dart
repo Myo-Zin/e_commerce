@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:e_commerce/customer/model/customer.dart';
+import 'package:e_commerce/auth/model/register_response.dart';
 
 import '../../util/dio_exception.dart';
 import '../../util/failure.dart';
@@ -10,7 +10,7 @@ class CustomerService {
 
   CustomerService(this._dio);
 
-  Future<Either<Failure, Customer>> createCustomer(
+  Future<Either<Failure, RegisterResponse>> createCustomer(
       {required String userName,
       required String email,
       required String password}) async {
@@ -21,7 +21,7 @@ class CustomerService {
     };
     try {
       final result = await _dio.post('/customers', data: formData);
-      return right(Customer.fromJson(result.data));
+      return right(RegisterResponse.fromJson(result.data));
     } on DioError catch (e) {
       return left(DioException.fromDioError(e).failure);
     }
