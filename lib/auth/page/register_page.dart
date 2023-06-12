@@ -1,22 +1,23 @@
-import 'package:e_commerce/auth/page/login_page.dart';
-import 'package:e_commerce/util/asset_string.dart';
-import 'package:e_commerce/util/route.dart';
+import 'package:e_commerce/auth/controller/login_register_controller.dart';
+import 'package:e_commerce/util/async_value_ui.dart';
+import 'package:e_commerce/util/extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../util/app_color.dart';
 import '../../util/app_theme.dart';
 import '../../util/validator.dart';
 import '../../widget/logo_widget.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   bool obsecure = false;
   late TextEditingController nameTextController;
   late TextEditingController emailTextController;
@@ -33,14 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(loginRegisterController);
+    ref.listen<AsyncValue>(
+      loginRegisterController,
+      (_, state) => state.showSnackBarOnError(context),
+    );
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-
-             const LogoWidget(),
+              const LogoWidget(),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -58,12 +63,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 8,
                     ),
                     TextFormField(
-                      validator: (value) => Validator.valueExists(value),
+                      validator: (value) => Validator.nameValidate(value),
                       controller: nameTextController,
                       decoration: AppTheme.authTextFieldDecoration.copyWith(
-                          // hintText: AppLocalizations.of(context).name,
-                          prefixIcon: const Icon(Icons.person),
-                          ),
+                        // hintText: AppLocalizations.of(context).name,
+                        prefixIcon: const Icon(Icons.person),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -74,13 +79,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 8,
                     ),
                     TextFormField(
-                      validator: (value) => Validator.phoneValidate(value),
-                      keyboardType: TextInputType.phone,
+                      validator: (value) => Validator.emailValidate(value),
+                      keyboardType: TextInputType.emailAddress,
                       controller: emailTextController,
                       decoration: AppTheme.authTextFieldDecoration.copyWith(
-                          // hintText: AppLocalizations.of(context).phone,
-                           prefixIcon: const Icon(Icons.email_outlined),
-                          ),
+                        // hintText: AppLocalizations.of(context).phone,
+                        prefixIcon: const Icon(Icons.email_outlined),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -96,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: obsecure,
                       decoration: AppTheme.authTextFieldDecoration.copyWith(
                         // hintText: AppLocalizations.of(context).password,
-                         prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: const Icon(Icons.lock),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
@@ -113,8 +118,34 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {  },
-                        child: const Text("Register"),
+                        onPressed: state.isLoading
+                            ? null
+                            : () async {
+                                if (_formKey.currentState?.validate() == true) {
+                                  final isSuccess = await ref
+                                      .read(loginRegisterController.notifier)
+                                      .register(
+                                        userName: nameTextController.text,
+                                        email: emailTextController.text,
+                                        password: passwordTextController.text,
+                                      );
+                                  if (mounted) {
+                                    if (isSuccess) {
+                                      context.showSuccessSnackBar(
+                                          "Successfully Register");
+                                      Navigator.pop(context);
+                                    }
+                                  }
+                                }
+                              },
+                        child: state.isLoading
+                            ? Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: CircularProgressIndicator(
+                                  color: AppColor.whiteColor,
+                                ),
+                              )
+                            : const Text("Register"),
                       ),
                     ),
                     // SizedBox(
@@ -197,5 +228,3 @@ class _RegisterPageState extends State<RegisterPage> {
     ;
   }
 }
-
-

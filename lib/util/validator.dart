@@ -10,10 +10,30 @@ class Validator {
   static String? nameValidate(dynamic value) {
     var emptyResult = valueExists(value);
     if (emptyResult == null || emptyResult.isEmpty) {
-      if (value.toString().length < 2) {
-        return 'Name must be at least 2 character';
+      if (value.toString().length < 5) {
+        return 'Name must be at least 5 character';
       } else {
         return null;
+      }
+    } else {
+      return emptyResult;
+    }
+  }
+
+  static String? emailValidate(dynamic value) {
+    var emptyResult = valueExists(value);
+    if (emptyResult == null || emptyResult.isEmpty) {
+      var isphone = isEmailUsingRegularExpression(value);
+
+      if (isphone) {
+        return  null;
+        // if (value.toString().length < 9 || value.toString().length > 13) {
+        //   return 'phone number must have at least 9 number';
+        // } else {
+        //   return null;
+        // }
+      } else {
+        return 'invalid email format';
       }
     } else {
       return emptyResult;
@@ -23,9 +43,9 @@ class Validator {
   static String? phoneValidate(dynamic value) {
     var emptyResult = valueExists(value);
     if (emptyResult == null || emptyResult.isEmpty) {
-      var isphone = isNumericUsingRegularExpression(value);
+      var isEmail = isEmailUsingRegularExpression(value);
 
-      if (isphone) {
+      if (isEmail) {
         if (value.toString().length < 9 || value.toString().length > 13) {
           return 'phone number must have at least 9 number';
         } else {
@@ -53,6 +73,15 @@ class Validator {
     }
   }
 
+  static bool isEmailUsingRegularExpression(String em) {
+
+    String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   static bool isNumericUsingRegularExpression(String string) {
     final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
 
@@ -63,8 +92,8 @@ class Validator {
     var emptyResult = valueExists(value);
 
     if (emptyResult == null || emptyResult.isEmpty) {
-      if (value.toString().length < 8) {
-        return 'Your password must be at least 8 character';
+      if (value.toString().length < 6) {
+        return 'Your password must be at least 6 character';
       } else {
         return null;
       }
@@ -101,17 +130,4 @@ class Validator {
     }
   }
 
-  static String? emailValidate(dynamic value) {
-    var pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    var regExp = RegExp(pattern);
-    var emptyResult = valueExists(value);
-    if (emptyResult != null) {
-      return emptyResult;
-    } else if (!regExp.hasMatch(value)) {
-      return 'Not a valid email address. Should be your@email.com';
-    } else {
-      return null;
-    }
-  }
 }

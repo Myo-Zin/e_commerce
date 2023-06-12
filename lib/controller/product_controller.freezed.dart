@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'product_controller.dart';
 
@@ -31,7 +31,8 @@ mixin _$ProductState {
 abstract class $ProductStateCopyWith<$Res> {
   factory $ProductStateCopyWith(
           ProductState value, $Res Function(ProductState) then) =
-      _$ProductStateCopyWithImpl<$Res>;
+      _$ProductStateCopyWithImpl<$Res, ProductState>;
+  @useResult
   $Res call(
       {int page,
       List<Product>? products,
@@ -41,43 +42,46 @@ abstract class $ProductStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductStateCopyWithImpl<$Res> implements $ProductStateCopyWith<$Res> {
+class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
+    implements $ProductStateCopyWith<$Res> {
   _$ProductStateCopyWithImpl(this._value, this._then);
 
-  final ProductState _value;
   // ignore: unused_field
-  final $Res Function(ProductState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
+    Object? page = null,
     Object? products = freezed,
-    Object? isLoading = freezed,
-    Object? isLoadMoreError = freezed,
-    Object? isLoadMoreDone = freezed,
+    Object? isLoading = null,
+    Object? isLoadMoreError = null,
+    Object? isLoadMoreDone = null,
   }) {
     return _then(_value.copyWith(
-      page: page == freezed
+      page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
-      products: products == freezed
+      products: freezed == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<Product>?,
-      isLoading: isLoading == freezed
+      isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoadMoreError: isLoadMoreError == freezed
+      isLoadMoreError: null == isLoadMoreError
           ? _value.isLoadMoreError
           : isLoadMoreError // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoadMoreDone: isLoadMoreDone == freezed
+      isLoadMoreDone: null == isLoadMoreDone
           ? _value.isLoadMoreDone
           : isLoadMoreDone // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -88,6 +92,7 @@ abstract class _$$_ProductStateCopyWith<$Res>
           _$_ProductState value, $Res Function(_$_ProductState) then) =
       __$$_ProductStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int page,
       List<Product>? products,
@@ -98,41 +103,39 @@ abstract class _$$_ProductStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_ProductStateCopyWithImpl<$Res>
-    extends _$ProductStateCopyWithImpl<$Res>
+    extends _$ProductStateCopyWithImpl<$Res, _$_ProductState>
     implements _$$_ProductStateCopyWith<$Res> {
   __$$_ProductStateCopyWithImpl(
       _$_ProductState _value, $Res Function(_$_ProductState) _then)
-      : super(_value, (v) => _then(v as _$_ProductState));
+      : super(_value, _then);
 
-  @override
-  _$_ProductState get _value => super._value as _$_ProductState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
+    Object? page = null,
     Object? products = freezed,
-    Object? isLoading = freezed,
-    Object? isLoadMoreError = freezed,
-    Object? isLoadMoreDone = freezed,
+    Object? isLoading = null,
+    Object? isLoadMoreError = null,
+    Object? isLoadMoreDone = null,
   }) {
     return _then(_$_ProductState(
-      page: page == freezed
+      page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
-      products: products == freezed
+      products: freezed == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
               as List<Product>?,
-      isLoading: isLoading == freezed
+      isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoadMoreError: isLoadMoreError == freezed
+      isLoadMoreError: null == isLoadMoreError
           ? _value.isLoadMoreError
           : isLoadMoreError // ignore: cast_nullable_to_non_nullable
               as bool,
-      isLoadMoreDone: isLoadMoreDone == freezed
+      isLoadMoreDone: null == isLoadMoreDone
           ? _value.isLoadMoreDone
           : isLoadMoreDone // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -160,6 +163,7 @@ class _$_ProductState extends _ProductState {
   List<Product>? get products {
     final value = _products;
     if (value == null) return null;
+    if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -184,26 +188,28 @@ class _$_ProductState extends _ProductState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ProductState &&
-            const DeepCollectionEquality().equals(other.page, page) &&
+            (identical(other.page, page) || other.page == page) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
-            const DeepCollectionEquality()
-                .equals(other.isLoadMoreError, isLoadMoreError) &&
-            const DeepCollectionEquality()
-                .equals(other.isLoadMoreDone, isLoadMoreDone));
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.isLoadMoreError, isLoadMoreError) ||
+                other.isLoadMoreError == isLoadMoreError) &&
+            (identical(other.isLoadMoreDone, isLoadMoreDone) ||
+                other.isLoadMoreDone == isLoadMoreDone));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(page),
+      page,
       const DeepCollectionEquality().hash(_products),
-      const DeepCollectionEquality().hash(isLoading),
-      const DeepCollectionEquality().hash(isLoadMoreError),
-      const DeepCollectionEquality().hash(isLoadMoreDone));
+      isLoading,
+      isLoadMoreError,
+      isLoadMoreDone);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ProductStateCopyWith<_$_ProductState> get copyWith =>
       __$$_ProductStateCopyWithImpl<_$_ProductState>(this, _$identity);
 }

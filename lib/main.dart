@@ -1,23 +1,22 @@
 import 'package:e_commerce/auth/page/login_page.dart';
-import 'package:e_commerce/auth/page/profile_page.dart';
 import 'package:e_commerce/category/page/category_page.dart';
-import 'package:e_commerce/screen/account_screen.dart';
-import 'package:e_commerce/screen/cart_screen.dart';
-import 'package:e_commerce/screen/home_screen.dart';
+import 'package:e_commerce/home/page/home_page.dart';
+import 'package:e_commerce/profile/page/profile_page.dart';
+import 'package:e_commerce/cart/page/cart_page.dart';
 import 'package:e_commerce/util/app_color.dart';
 import 'package:e_commerce/util/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'auth/controller/auth_controller.dart';
 import 'controller/cart_controller_provider.dart';
 import 'auth/page/register_page.dart';
 import 'data/local/data_model.dart';
 import 'data/local/database_service.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -32,14 +31,11 @@ Future<void> main() async {
   // await Hive.openBox<DataModel>(cartBoxName);
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
-  runApp(Phoenix(
-      child: ProviderScope(
-          overrides: [databaseService.overrideWithValue(_databaseService)],
-          child: const MyApp())));
+
+  runApp(ProviderScope(
+      overrides: [databaseService.overrideWithValue(_databaseService)],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -48,13 +44,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.themeData,
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.themeData,
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -71,7 +65,7 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   int _selectedItemIndex = 0;
   final screens = [
-    HomeScreen(),
+    const HomePage(),
     const CategoryPage(),
     const CartScreen(),
     const ProfilePage(),
@@ -79,8 +73,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(authControllerProvider.notifier).getAuth();
+    });
     initialize();
   }
 
@@ -92,7 +88,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final cartBox = ref.watch(cartControllerProvider);
+  //  final cartBox = ref.watch(cartControllerProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // appBar: AppBar(
@@ -102,11 +98,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         index: _selectedItemIndex,
         children: screens,
       ),
-      bottomNavigationBar: _bottomNavigationBar(cartBox),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 
-  Widget _bottomNavigationBar(List<DataModel> cartBox) {
+  Widget _bottomNavigationBar() {
     return BottomNavigationBar(
         currentIndex: _selectedItemIndex,
         // selectedItemColor: Colors.white,
@@ -124,12 +120,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             label: 'Category',
           ),
           BottomNavigationBarItem(
-            icon: cartBox.isNotEmpty
-                ? Badge(
-                    label: Text("${cartBox.length}"),
-                    backgroundColor: Colors.white,
-                    child: const Icon(Icons.shopping_cart))
-                : const Icon(Icons.shopping_cart),
+            // icon: cartBox.isNotEmpty
+            //     ? Badge(
+            //         label: Text("${cartBox.length}"),
+            //         backgroundColor: Colors.white,
+            //         child: const Icon(Icons.shopping_cart))
+               // :
+            icon: const Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
           const BottomNavigationBarItem(

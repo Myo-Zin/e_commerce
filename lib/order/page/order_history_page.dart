@@ -1,15 +1,17 @@
-import 'package:e_commerce/order/controller/providers.dart';
 import 'package:e_commerce/widget/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../controller/order_history_controller.dart';
+
 class OrderHistoryPage extends ConsumerWidget {
-  const OrderHistoryPage({Key? key}) : super(key: key);
+  const OrderHistoryPage(this.customerId, {Key? key}) : super(key: key);
+  final int customerId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final orderHistoryState = ref.watch(orderHistoryController(15));
+    final orderHistoryState = ref.watch(orderHistoryController(customerId));
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order History"),

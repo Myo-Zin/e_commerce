@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../controller/firebase_controller.dart';
 import '../controller/order_controller.dart';
 import '../controller/shared_preference_controller.dart';
 import '../data/local/data_model.dart';
@@ -12,7 +9,6 @@ import '../model/order.dart';
 import '../model/user.dart';
 import '../widget/loading.dart';
 import '../widget/loading_dialog.dart';
-import 'account_screen.dart';
 
 class CheckOutScreen extends ConsumerWidget {
    CheckOutScreen(this.grandTotal, this.cartList, {Key? key})
@@ -229,38 +225,38 @@ class CheckOutScreen extends ConsumerWidget {
                                 onPressed: () async {
                                   Navigator.of(context).pop();
                                   loadingDialog(context);
-                                  LoginUser loginUser =
-                                  await ref.watch(firebaseController).getUser();
-                                  Order order = Order(
-                                      paymentMethod: "cod",
-                                      paymentMethodTitle: "Cash on delivery",
-                                      customerNote: _controller.text,
-                                      setPaid: true,
-                                      billing: Billing(
-                                          firstName: loginUser.name,
-                                          lastName: loginUser.name,
-                                          company: loginUser.name,
-                                          address1: loginUser.address,
-                                          address2: loginUser.address,
-                                          city: loginUser.city,
-                                          state: loginUser.state,
-                                          postcode: "11111",
-                                          country: "Myanmar",
-                                          email: "example@gmail.com",
-                                          phone: loginUser.phone),
-                                      shipping: Shipping(
-                                          firstName: loginUser.name,
-                                          lastName: loginUser.name,
-                                          company: loginUser.name,
-                                          address1: loginUser.address,
-                                          address2: loginUser.address,
-                                          city: loginUser.city,
-                                          state: loginUser.state,
-                                          postcode: "11111",
-                                          country: "Myanmar",
-                                          phone: loginUser.phone),
-                                      lineItems: lineItems);
-                                  ref.read(orderViewController).order(order);
+                                 // LoginUser loginUser =
+                                  // await ref.watch(firebaseController).getUser();
+                                  // Order order = Order(
+                                  //     paymentMethod: "cod",
+                                  //     paymentMethodTitle: "Cash on delivery",
+                                  //     customerNote: _controller.text,
+                                  //     setPaid: true,
+                                  //     billing: Billing(
+                                  //         firstName: loginUser.name,
+                                  //         lastName: loginUser.name,
+                                  //         company: loginUser.name,
+                                  //         address1: loginUser.address,
+                                  //         address2: loginUser.address,
+                                  //         city: loginUser.city,
+                                  //         state: loginUser.state,
+                                  //         postcode: "11111",
+                                  //         country: "Myanmar",
+                                  //         email: "example@gmail.com",
+                                  //         phone: loginUser.phone),
+                                  //     shipping: Shipping(
+                                  //         firstName: loginUser.name,
+                                  //         lastName: loginUser.name,
+                                  //         company: loginUser.name,
+                                  //         address1: loginUser.address,
+                                  //         address2: loginUser.address,
+                                  //         city: loginUser.city,
+                                  //         state: loginUser.state,
+                                  //         postcode: "11111",
+                                  //         country: "Myanmar",
+                                  //         phone: loginUser.phone),
+                                  //     lineItems: lineItems);
+                                  // ref.read(orderViewController).order(order);
                                 },
                               ),
                             ],
@@ -285,7 +281,7 @@ class CheckOutScreen extends ConsumerWidget {
                             CupertinoDialogAction(
                               child: const Text("Ok"),
                               onPressed: ()  {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const RegisterScreen("create",null)));
+                                //Navigator.push(context, MaterialPageRoute(builder: (context)=> const RegisterScreen("create",null)));
                               },
                             ),
                           ],

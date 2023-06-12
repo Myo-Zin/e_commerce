@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'order.dart';
 
@@ -36,7 +36,8 @@ mixin _$Order {
 /// @nodoc
 abstract class $OrderCopyWith<$Res> {
   factory $OrderCopyWith(Order value, $Res Function(Order) then) =
-      _$OrderCopyWithImpl<$Res>;
+      _$OrderCopyWithImpl<$Res, Order>;
+  @useResult
   $Res call(
       {String? paymentMethod,
       String? paymentMethodTitle,
@@ -51,13 +52,16 @@ abstract class $OrderCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
+class _$OrderCopyWithImpl<$Res, $Val extends Order>
+    implements $OrderCopyWith<$Res> {
   _$OrderCopyWithImpl(this._value, this._then);
 
-  final Order _value;
   // ignore: unused_field
-  final $Res Function(Order) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? paymentMethod = freezed,
@@ -69,56 +73,58 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? lineItems = freezed,
   }) {
     return _then(_value.copyWith(
-      paymentMethod: paymentMethod == freezed
+      paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentMethodTitle: paymentMethodTitle == freezed
+      paymentMethodTitle: freezed == paymentMethodTitle
           ? _value.paymentMethodTitle
           : paymentMethodTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerNote: customerNote == freezed
+      customerNote: freezed == customerNote
           ? _value.customerNote
           : customerNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      setPaid: setPaid == freezed
+      setPaid: freezed == setPaid
           ? _value.setPaid
           : setPaid // ignore: cast_nullable_to_non_nullable
               as bool?,
-      billing: billing == freezed
+      billing: freezed == billing
           ? _value.billing
           : billing // ignore: cast_nullable_to_non_nullable
               as Billing?,
-      shipping: shipping == freezed
+      shipping: freezed == shipping
           ? _value.shipping
           : shipping // ignore: cast_nullable_to_non_nullable
               as Shipping?,
-      lineItems: lineItems == freezed
+      lineItems: freezed == lineItems
           ? _value.lineItems
           : lineItems // ignore: cast_nullable_to_non_nullable
               as List<LineItems>?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BillingCopyWith<$Res>? get billing {
     if (_value.billing == null) {
       return null;
     }
 
     return $BillingCopyWith<$Res>(_value.billing!, (value) {
-      return _then(_value.copyWith(billing: value));
+      return _then(_value.copyWith(billing: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ShippingCopyWith<$Res>? get shipping {
     if (_value.shipping == null) {
       return null;
     }
 
     return $ShippingCopyWith<$Res>(_value.shipping!, (value) {
-      return _then(_value.copyWith(shipping: value));
+      return _then(_value.copyWith(shipping: value) as $Val);
     });
   }
 }
@@ -128,6 +134,7 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
   factory _$$_OrderCopyWith(_$_Order value, $Res Function(_$_Order) then) =
       __$$_OrderCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? paymentMethod,
       String? paymentMethodTitle,
@@ -144,14 +151,12 @@ abstract class _$$_OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
+class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res, _$_Order>
     implements _$$_OrderCopyWith<$Res> {
   __$$_OrderCopyWithImpl(_$_Order _value, $Res Function(_$_Order) _then)
-      : super(_value, (v) => _then(v as _$_Order));
+      : super(_value, _then);
 
-  @override
-  _$_Order get _value => super._value as _$_Order;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? paymentMethod = freezed,
@@ -163,31 +168,31 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? lineItems = freezed,
   }) {
     return _then(_$_Order(
-      paymentMethod: paymentMethod == freezed
+      paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentMethodTitle: paymentMethodTitle == freezed
+      paymentMethodTitle: freezed == paymentMethodTitle
           ? _value.paymentMethodTitle
           : paymentMethodTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerNote: customerNote == freezed
+      customerNote: freezed == customerNote
           ? _value.customerNote
           : customerNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      setPaid: setPaid == freezed
+      setPaid: freezed == setPaid
           ? _value.setPaid
           : setPaid // ignore: cast_nullable_to_non_nullable
               as bool?,
-      billing: billing == freezed
+      billing: freezed == billing
           ? _value.billing
           : billing // ignore: cast_nullable_to_non_nullable
               as Billing?,
-      shipping: shipping == freezed
+      shipping: freezed == shipping
           ? _value.shipping
           : shipping // ignore: cast_nullable_to_non_nullable
               as Shipping?,
-      lineItems: lineItems == freezed
+      lineItems: freezed == lineItems
           ? _value._lineItems
           : lineItems // ignore: cast_nullable_to_non_nullable
               as List<LineItems>?,
@@ -228,6 +233,7 @@ class _$_Order implements _Order {
   List<LineItems>? get lineItems {
     final value = _lineItems;
     if (value == null) return null;
+    if (_lineItems is EqualUnmodifiableListView) return _lineItems;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -242,15 +248,16 @@ class _$_Order implements _Order {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Order &&
-            const DeepCollectionEquality()
-                .equals(other.paymentMethod, paymentMethod) &&
-            const DeepCollectionEquality()
-                .equals(other.paymentMethodTitle, paymentMethodTitle) &&
-            const DeepCollectionEquality()
-                .equals(other.customerNote, customerNote) &&
-            const DeepCollectionEquality().equals(other.setPaid, setPaid) &&
-            const DeepCollectionEquality().equals(other.billing, billing) &&
-            const DeepCollectionEquality().equals(other.shipping, shipping) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.paymentMethodTitle, paymentMethodTitle) ||
+                other.paymentMethodTitle == paymentMethodTitle) &&
+            (identical(other.customerNote, customerNote) ||
+                other.customerNote == customerNote) &&
+            (identical(other.setPaid, setPaid) || other.setPaid == setPaid) &&
+            (identical(other.billing, billing) || other.billing == billing) &&
+            (identical(other.shipping, shipping) ||
+                other.shipping == shipping) &&
             const DeepCollectionEquality()
                 .equals(other._lineItems, _lineItems));
   }
@@ -259,16 +266,17 @@ class _$_Order implements _Order {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(paymentMethod),
-      const DeepCollectionEquality().hash(paymentMethodTitle),
-      const DeepCollectionEquality().hash(customerNote),
-      const DeepCollectionEquality().hash(setPaid),
-      const DeepCollectionEquality().hash(billing),
-      const DeepCollectionEquality().hash(shipping),
+      paymentMethod,
+      paymentMethodTitle,
+      customerNote,
+      setPaid,
+      billing,
+      shipping,
       const DeepCollectionEquality().hash(_lineItems));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_OrderCopyWith<_$_Order> get copyWith =>
       __$$_OrderCopyWithImpl<_$_Order>(this, _$identity);
 
@@ -338,7 +346,8 @@ mixin _$Billing {
 /// @nodoc
 abstract class $BillingCopyWith<$Res> {
   factory $BillingCopyWith(Billing value, $Res Function(Billing) then) =
-      _$BillingCopyWithImpl<$Res>;
+      _$BillingCopyWithImpl<$Res, Billing>;
+  @useResult
   $Res call(
       {String? firstName,
       String? lastName,
@@ -354,13 +363,16 @@ abstract class $BillingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BillingCopyWithImpl<$Res> implements $BillingCopyWith<$Res> {
+class _$BillingCopyWithImpl<$Res, $Val extends Billing>
+    implements $BillingCopyWith<$Res> {
   _$BillingCopyWithImpl(this._value, this._then);
 
-  final Billing _value;
   // ignore: unused_field
-  final $Res Function(Billing) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? firstName = freezed,
@@ -376,51 +388,51 @@ class _$BillingCopyWithImpl<$Res> implements $BillingCopyWith<$Res> {
     Object? phone = freezed,
   }) {
     return _then(_value.copyWith(
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      company: company == freezed
+      company: freezed == company
           ? _value.company
           : company // ignore: cast_nullable_to_non_nullable
               as String?,
-      address1: address1 == freezed
+      address1: freezed == address1
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address2: address2 == freezed
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      postcode: postcode == freezed
+      postcode: freezed == postcode
           ? _value.postcode
           : postcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -430,6 +442,7 @@ abstract class _$$_BillingCopyWith<$Res> implements $BillingCopyWith<$Res> {
           _$_Billing value, $Res Function(_$_Billing) then) =
       __$$_BillingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? firstName,
       String? lastName,
@@ -445,14 +458,13 @@ abstract class _$$_BillingCopyWith<$Res> implements $BillingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_BillingCopyWithImpl<$Res> extends _$BillingCopyWithImpl<$Res>
+class __$$_BillingCopyWithImpl<$Res>
+    extends _$BillingCopyWithImpl<$Res, _$_Billing>
     implements _$$_BillingCopyWith<$Res> {
   __$$_BillingCopyWithImpl(_$_Billing _value, $Res Function(_$_Billing) _then)
-      : super(_value, (v) => _then(v as _$_Billing));
+      : super(_value, _then);
 
-  @override
-  _$_Billing get _value => super._value as _$_Billing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? firstName = freezed,
@@ -468,47 +480,47 @@ class __$$_BillingCopyWithImpl<$Res> extends _$BillingCopyWithImpl<$Res>
     Object? phone = freezed,
   }) {
     return _then(_$_Billing(
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      company: company == freezed
+      company: freezed == company
           ? _value.company
           : company // ignore: cast_nullable_to_non_nullable
               as String?,
-      address1: address1 == freezed
+      address1: freezed == address1
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address2: address2 == freezed
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      postcode: postcode == freezed
+      postcode: freezed == postcode
           ? _value.postcode
           : postcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -568,37 +580,32 @@ class _$_Billing implements _Billing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Billing &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.company, company) &&
-            const DeepCollectionEquality().equals(other.address1, address1) &&
-            const DeepCollectionEquality().equals(other.address2, address2) &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.postcode, postcode) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.phone, phone));
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.company, company) || other.company == company) &&
+            (identical(other.address1, address1) ||
+                other.address1 == address1) &&
+            (identical(other.address2, address2) ||
+                other.address2 == address2) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.postcode, postcode) ||
+                other.postcode == postcode) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(company),
-      const DeepCollectionEquality().hash(address1),
-      const DeepCollectionEquality().hash(address2),
-      const DeepCollectionEquality().hash(city),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(postcode),
-      const DeepCollectionEquality().hash(country),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(phone));
+  int get hashCode => Object.hash(runtimeType, firstName, lastName, company,
+      address1, address2, city, state, postcode, country, email, phone);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BillingCopyWith<_$_Billing> get copyWith =>
       __$$_BillingCopyWithImpl<_$_Billing>(this, _$identity);
 
@@ -680,7 +687,8 @@ mixin _$Shipping {
 /// @nodoc
 abstract class $ShippingCopyWith<$Res> {
   factory $ShippingCopyWith(Shipping value, $Res Function(Shipping) then) =
-      _$ShippingCopyWithImpl<$Res>;
+      _$ShippingCopyWithImpl<$Res, Shipping>;
+  @useResult
   $Res call(
       {String? firstName,
       String? lastName,
@@ -695,13 +703,16 @@ abstract class $ShippingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ShippingCopyWithImpl<$Res> implements $ShippingCopyWith<$Res> {
+class _$ShippingCopyWithImpl<$Res, $Val extends Shipping>
+    implements $ShippingCopyWith<$Res> {
   _$ShippingCopyWithImpl(this._value, this._then);
 
-  final Shipping _value;
   // ignore: unused_field
-  final $Res Function(Shipping) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? firstName = freezed,
@@ -716,47 +727,47 @@ class _$ShippingCopyWithImpl<$Res> implements $ShippingCopyWith<$Res> {
     Object? phone = freezed,
   }) {
     return _then(_value.copyWith(
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      company: company == freezed
+      company: freezed == company
           ? _value.company
           : company // ignore: cast_nullable_to_non_nullable
               as String?,
-      address1: address1 == freezed
+      address1: freezed == address1
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address2: address2 == freezed
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      postcode: postcode == freezed
+      postcode: freezed == postcode
           ? _value.postcode
           : postcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -766,6 +777,7 @@ abstract class _$$_ShippingCopyWith<$Res> implements $ShippingCopyWith<$Res> {
           _$_Shipping value, $Res Function(_$_Shipping) then) =
       __$$_ShippingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? firstName,
       String? lastName,
@@ -780,15 +792,14 @@ abstract class _$$_ShippingCopyWith<$Res> implements $ShippingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ShippingCopyWithImpl<$Res> extends _$ShippingCopyWithImpl<$Res>
+class __$$_ShippingCopyWithImpl<$Res>
+    extends _$ShippingCopyWithImpl<$Res, _$_Shipping>
     implements _$$_ShippingCopyWith<$Res> {
   __$$_ShippingCopyWithImpl(
       _$_Shipping _value, $Res Function(_$_Shipping) _then)
-      : super(_value, (v) => _then(v as _$_Shipping));
+      : super(_value, _then);
 
-  @override
-  _$_Shipping get _value => super._value as _$_Shipping;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? firstName = freezed,
@@ -803,43 +814,43 @@ class __$$_ShippingCopyWithImpl<$Res> extends _$ShippingCopyWithImpl<$Res>
     Object? phone = freezed,
   }) {
     return _then(_$_Shipping(
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      company: company == freezed
+      company: freezed == company
           ? _value.company
           : company // ignore: cast_nullable_to_non_nullable
               as String?,
-      address1: address1 == freezed
+      address1: freezed == address1
           ? _value.address1
           : address1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      address2: address2 == freezed
+      address2: freezed == address2
           ? _value.address2
           : address2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      postcode: postcode == freezed
+      postcode: freezed == postcode
           ? _value.postcode
           : postcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -896,35 +907,31 @@ class _$_Shipping implements _Shipping {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Shipping &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.company, company) &&
-            const DeepCollectionEquality().equals(other.address1, address1) &&
-            const DeepCollectionEquality().equals(other.address2, address2) &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.postcode, postcode) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality().equals(other.phone, phone));
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.company, company) || other.company == company) &&
+            (identical(other.address1, address1) ||
+                other.address1 == address1) &&
+            (identical(other.address2, address2) ||
+                other.address2 == address2) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.postcode, postcode) ||
+                other.postcode == postcode) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(company),
-      const DeepCollectionEquality().hash(address1),
-      const DeepCollectionEquality().hash(address2),
-      const DeepCollectionEquality().hash(city),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(postcode),
-      const DeepCollectionEquality().hash(country),
-      const DeepCollectionEquality().hash(phone));
+  int get hashCode => Object.hash(runtimeType, firstName, lastName, company,
+      address1, address2, city, state, postcode, country, phone);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ShippingCopyWith<_$_Shipping> get copyWith =>
       __$$_ShippingCopyWithImpl<_$_Shipping>(this, _$identity);
 
@@ -995,33 +1002,37 @@ mixin _$LineItems {
 /// @nodoc
 abstract class $LineItemsCopyWith<$Res> {
   factory $LineItemsCopyWith(LineItems value, $Res Function(LineItems) then) =
-      _$LineItemsCopyWithImpl<$Res>;
+      _$LineItemsCopyWithImpl<$Res, LineItems>;
+  @useResult
   $Res call({int? productId, int? quantity});
 }
 
 /// @nodoc
-class _$LineItemsCopyWithImpl<$Res> implements $LineItemsCopyWith<$Res> {
+class _$LineItemsCopyWithImpl<$Res, $Val extends LineItems>
+    implements $LineItemsCopyWith<$Res> {
   _$LineItemsCopyWithImpl(this._value, this._then);
 
-  final LineItems _value;
   // ignore: unused_field
-  final $Res Function(LineItems) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? productId = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_value.copyWith(
-      productId: productId == freezed
+      productId: freezed == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1031,30 +1042,30 @@ abstract class _$$_LineItemsCopyWith<$Res> implements $LineItemsCopyWith<$Res> {
           _$_LineItems value, $Res Function(_$_LineItems) then) =
       __$$_LineItemsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int? productId, int? quantity});
 }
 
 /// @nodoc
-class __$$_LineItemsCopyWithImpl<$Res> extends _$LineItemsCopyWithImpl<$Res>
+class __$$_LineItemsCopyWithImpl<$Res>
+    extends _$LineItemsCopyWithImpl<$Res, _$_LineItems>
     implements _$$_LineItemsCopyWith<$Res> {
   __$$_LineItemsCopyWithImpl(
       _$_LineItems _value, $Res Function(_$_LineItems) _then)
-      : super(_value, (v) => _then(v as _$_LineItems));
+      : super(_value, _then);
 
-  @override
-  _$_LineItems get _value => super._value as _$_LineItems;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? productId = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_$_LineItems(
-      productId: productId == freezed
+      productId: freezed == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -1085,19 +1096,19 @@ class _$_LineItems implements _LineItems {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LineItems &&
-            const DeepCollectionEquality().equals(other.productId, productId) &&
-            const DeepCollectionEquality().equals(other.quantity, quantity));
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(productId),
-      const DeepCollectionEquality().hash(quantity));
+  int get hashCode => Object.hash(runtimeType, productId, quantity);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LineItemsCopyWith<_$_LineItems> get copyWith =>
       __$$_LineItemsCopyWithImpl<_$_LineItems>(this, _$identity);
 

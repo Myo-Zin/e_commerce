@@ -21,9 +21,9 @@ abstract class ProductState with _$ProductState {
   const ProductState._();
 }
 
-final productsProvider = StateNotifierProvider<ProductNotifier, ProductState>((ref) {
-  return ProductNotifier(ref);
-});
+// final productsProvider = StateNotifierProvider<ProductNotifier, ProductState>((ref) {
+//   return ProductNotifier(ref);
+// });
 
 class ProductNotifier extends StateNotifier<ProductState> {
   Ref ref;
@@ -40,34 +40,14 @@ class ProductNotifier extends StateNotifier<ProductState> {
       return;
     }
 
-    print('get post is ${products.length}');
     state = state.copyWith(page: page, isLoading: false, products: products);
   }
 
   loadMoreProduct() async {
-    StringBuffer bf = StringBuffer();
-
-    bf.write('try to request loading ${state.isLoading} at ${state.page + 1}');
-    if (state.isLoading) {
-      bf.write(' fail');
-      return;
-    }
-    bf.write(' success');
-    print(bf.toString());
     state = state.copyWith(
         isLoading: true, isLoadMoreDone: false, isLoadMoreError: false);
      final products = await ref.read(repositoryProvider).getAllProduct(state.page + 1);
-
-
-    if (products == null) {
-      // error
-      state = state.copyWith(isLoadMoreError: true, isLoading: false);
-      return;
-    }
-
-    print('load more ${products.length} products at page ${state.page + 1}');
     if (products.isNotEmpty) {
-      // if load more return a list not empty, => increment page
       state = state.copyWith(
           page: state.page + 1,
           isLoading: false,
@@ -105,21 +85,10 @@ class ProductBySearchNotifier extends StateNotifier<ProductState> {
       state = state.copyWith(page: page, isLoading: false);
       return;
     }
-
-    print('get post is ${products.length}');
     state = state.copyWith(page: page, isLoading: false, products: products);
   }
 
   loadMoreProduct() async {
-    StringBuffer bf = StringBuffer();
-
-    bf.write('try to request loading ${state.isLoading} at ${state.page + 1}');
-    if (state.isLoading) {
-      bf.write(' fail');
-      return;
-    }
-    bf.write(' success');
-    print(bf.toString());
     state = state.copyWith(
         isLoading: true, isLoadMoreDone: false, isLoadMoreError: false);
     final products = await ref.read(repositoryProvider).getAllProductBySearch(state.page + 1,search);
@@ -131,7 +100,6 @@ class ProductBySearchNotifier extends StateNotifier<ProductState> {
       return;
     }
 
-    print('load more ${products.length} products at page ${state.page + 1}');
     if (products.isNotEmpty) {
       // if load more return a list not empty, => increment page
       state = state.copyWith(
@@ -220,4 +188,3 @@ class ProductByCategoryIdNotifier extends StateNotifier<ProductState> {
 }
 
 
-final getRelatedIdController = FutureProvider.family<List<Product>,String>((ref,ids) => ref.watch(repositoryProvider).getRelatedProducts(ids));

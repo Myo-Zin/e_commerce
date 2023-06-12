@@ -1,31 +1,31 @@
-
-
-
+import 'package:e_commerce/data/api_const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../controller/shared_preference_controller.dart';
+import 'package:flutter_wp_woocommerce/utilities/local_db.dart';
 import '../model/auth_state.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
   AuthNotifier() : super(const AuthState.unAuthenticated());
 
   void getAuth() async {
-    final token = await SharedPreferencesService.getAuth();
-    if (token == null) {
-      state = const AuthState.unAuthenticated();
+    final isLogin = await ApiHelper.wooCommerce.isCustomerLoggedIn();
+    //ApiHelper.wooCommerce.createOrder(orderPayload)
+    if (isLogin) {
+      state = const AuthState.authenticated();
     } else {
-      state = AuthState.authenticated(token);
+      state = const AuthState.unAuthenticated();
     }
   }
 
-  void logout() {
+  Future<void> logout() async {
     state = const AuthState.unAuthenticated();
-    SharedPreferencesService.clear();
+    await ApiHelper.wooCommerce.logUserOut();
   }
 
-  void changeAuth(AuthState authState) {
-    state = authState;
+  void changeAuthState() {
+    state = const AuthState.authenticated();
   }
 }
+
 final authControllerProvider =
-StateNotifierProvider<AuthNotifier, AuthState>((ref) => AuthNotifier());
+    StateNotifierProvider<AuthNotifier, AuthState>((ref) => AuthNotifier());

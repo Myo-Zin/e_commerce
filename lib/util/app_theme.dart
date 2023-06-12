@@ -17,8 +17,8 @@ class AppTheme {
         backgroundColor: AppColor.primaryColor,
         textStyle:  TextStyle(
           color: AppColor.whiteColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
+          // fontWeight: FontWeight.w500,
+          // fontSize: 18,
         ),
         fixedSize: const Size.fromHeight(50),
         shape: RoundedRectangleBorder(
@@ -59,7 +59,7 @@ class AppTheme {
 class AppTextStyle {
   static TextStyle titleTextStyle = const TextStyle(
     fontSize: 17,
-    color: Colors.green,
+    //color: Colors.green,
     fontWeight: FontWeight.bold,
   );
 // static TextStyle yellowMedium = TextStyle(
