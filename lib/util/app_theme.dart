@@ -4,18 +4,25 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData themeData = ThemeData(
     appBarTheme: AppBarTheme(
-        backgroundColor: AppColor.primaryColor,
-        titleTextStyle: const TextStyle(fontSize: 14.0)),
+      backgroundColor: AppColor.whiteColor,
+      elevation: 1,
+      iconTheme: IconThemeData(
+        color: AppColor.primaryColor, //change your color here
+      ),
+
+      //toolbarTextStyle: TextStyle(color: AppColor.primaryColor),
+      titleTextStyle:  TextStyle(fontSize: 14.0,color: AppColor.primaryColor,),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: AppColor.secondaryColor,
-      unselectedItemColor: AppColor.whiteColor,
-      backgroundColor: AppColor.primaryColor,
+      selectedItemColor: AppColor.primaryColor,
+      // unselectedItemColor: AppColor.whiteColor,
+      backgroundColor: Colors.white,
       type: BottomNavigationBarType.fixed,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColor.primaryColor,
-        textStyle:  TextStyle(
+        textStyle: TextStyle(
           color: AppColor.whiteColor,
           // fontWeight: FontWeight.w500,
           // fontSize: 18,
@@ -39,7 +46,7 @@ class AppTheme {
       borderRadius: BorderRadius.circular(5),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: AppColor.primaryColor,width: 2),
+      borderSide: BorderSide(color: AppColor.primaryColor, width: 2),
       borderRadius: BorderRadius.circular(5),
     ),
     errorBorder: OutlineInputBorder(

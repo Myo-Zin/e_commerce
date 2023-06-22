@@ -17,8 +17,8 @@ extension BuildContextUI on BuildContext {
                 child: Text(
                   content,
                   style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                    color: Colors.white,
+                    //fontSize: 16,
                   ),
                 ),
               ),
@@ -45,8 +45,8 @@ extension BuildContextUI on BuildContext {
               Text(
                 content,
                 style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
+                  color: Colors.white,
+                  //fontSize: 16,
                 ),
               ),
             ],

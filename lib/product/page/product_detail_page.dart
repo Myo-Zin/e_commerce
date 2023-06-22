@@ -205,11 +205,13 @@ class _ProductDetailPageState extends ConsumerState<ProductDetailPage> {
                               context.showSuccessSnackBar("Successfully Added");
                             }
                           },
-                    child: cartState.isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : const Text("Add to Cart"),
+                    child:
+                        // cartState.isLoading
+                        //     ? const Center(
+                        //         child: CircularProgressIndicator(),
+                        //       )
+                        //  :
+                        const Text("Add to Cart"),
                   ),
                 ),
               ],

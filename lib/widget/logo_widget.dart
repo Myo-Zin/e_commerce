@@ -8,12 +8,9 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 250,
-        child:  const Image(
-          image: AssetImage(AssetString.logo),
-          fit: BoxFit.fill,
-        ));
+    return const CircleAvatar(
+      backgroundImage: AssetImage(AssetString.logo),
+      radius: 100,
+    );
   }
 }

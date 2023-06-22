@@ -2,6 +2,7 @@ import 'package:e_commerce/product/model/product_param.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../util/app_color.dart';
 import '../../widget/loading.dart';
 import '../controller/product_pagination_controller.dart';
 import '../widget/products.dart';
@@ -48,7 +49,8 @@ class _ProductSearchPageState extends ConsumerState<ProductSearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.search),
+          title: Text(widget.search,
+              style: TextStyle(color: AppColor.primaryColor)),
         ),
         body: Consumer(builder: (ctx, watch, child) {
           final isLoadMoreError = ref

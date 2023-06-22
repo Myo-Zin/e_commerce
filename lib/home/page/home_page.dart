@@ -6,10 +6,9 @@ import 'package:e_commerce/util/route.dart';
 import 'package:e_commerce/widget/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_wp_woocommerce/models/products.dart';
 
-import '../../product/widget/product_grid_widget.dart';
 import '../../product/widget/products.dart';
+import '../../util/app_color.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,50 +41,58 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Container(
-            width: double.infinity,
-            //height: 40,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: TextField(
-              controller: searchEditingController,
-              // enabled: false,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  // suffixIcon: IconButton(
-                  //   icon: const Icon(Icons.clear),
-                  //   onPressed: () {
-                  //     /* Clear the search field */
-                  //   },
-                  // ),
-                  //hintStyle: TextStyle(fontSize: 11),
-                  hintText: 'Search...',
-                  border: InputBorder.none),
+          toolbarHeight: 80,
+          title: TextField(
+            controller: searchEditingController,
+            // enabled: false,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              // suffixIcon: IconButton(
+              //   icon: const Icon(Icons.clear),
+              //   onPressed: () {
+              //     /* Clear the search field */
+              //   },
+              // ),
+              //hintStyle: TextStyle(fontSize: 11),
+              hintText: 'Search...',
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColor.primaryColor ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              enabledBorder:  OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColor.primaryColor),
+                  borderRadius: BorderRadius.circular(15)),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColor.primaryColor),
+                  borderRadius: BorderRadius.circular(15)),
+              contentPadding: const EdgeInsets.symmetric(vertical: 7),
             ),
           ),
           actions: [
-            InkWell(
-                onTap: () {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  if (searchEditingController.text.isEmpty) {
-                    // Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text('Enter text')));
-                  } else {
-                    //searchEditingController.value.cl;
-                    goto(context, page: ProductSearchPage(searchEditingController.text));
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => SearchDetailScreen(
-                    //             searchEditingController.text)));
-                  }
-                },
-                child: const Center(
-                    child: Text(
-                  "Search",
-                ))),
+            Center(
+                child: TextButton(
+                  child: Text(
+              "Search",
+            ),
+                  onPressed: (){
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (searchEditingController.text.isEmpty) {
+                      // Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Enter text')));
+                    } else {
+                      //searchEditingController.value.cl;
+                      goto(context, page: ProductSearchPage(searchEditingController.text));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => SearchDetailScreen(
+                      //             searchEditingController.text)));
+                    }
+                  },
+                ),
+            ),
             const SizedBox(
               width: 16,
             )
@@ -93,8 +100,10 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
         body: Consumer(
           builder: (context, ref, child) {
-            final isLoadMoreError = ref.watch(productsProvider(null)).isLoadMoreError;
-            final isLoadMoreDone = ref.watch(productsProvider(null)).isLoadMoreDone;
+            final isLoadMoreError =
+                ref.watch(productsProvider(null)).isLoadMoreError;
+            final isLoadMoreDone =
+                ref.watch(productsProvider(null)).isLoadMoreDone;
             final isLoading = ref.watch(productsProvider(null)).isLoading;
             final products = ref.watch(productsProvider(null)).products;
 
@@ -129,7 +138,3 @@ class _HomePageState extends ConsumerState<HomePage> {
         ));
   }
 }
-
-
-
-

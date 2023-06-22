@@ -1,3 +1,5 @@
+import 'package:e_commerce/cart/controller/cart_list_controller.dart';
+import 'package:e_commerce/cart/controller/total_price_cart_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -68,6 +70,22 @@ class CartNotifier extends StateNotifier<AsyncValue<void>> {
       final token = await ApiHelper.wooCommerce.getAuthTokenFromDb();
       final nonce = await getNonce();
       await _cartService.delete(key: key, token: token, nonce: nonce);
+      state = const AsyncValue.data(null);
+      return true;
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.empty);
+      return false;
+    }
+  }
+
+  Future<bool> updateCart(
+      {required String key, required int id, required quantity}) async {
+    try {
+      state = const AsyncLoading();
+      final token = await ApiHelper.wooCommerce.getAuthTokenFromDb();
+      final nonce = await getNonce();
+      await _cartService.updateMyCartItemByKey(
+          key: key, id: id, quantity: quantity, token: token, nonce: nonce);
       state = const AsyncValue.data(null);
       return true;
     } catch (e) {

@@ -40,11 +40,15 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       (_, state) => state.showSnackBarOnError(context),
     );
     return Scaffold(
+      appBar: AppBar(title: const Text("Register"),),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
+              const SizedBox(
+                height: 8,
+              ),
               const LogoWidget(),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -134,6 +138,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                       context.showSuccessSnackBar(
                                           "Successfully Register");
                                       Navigator.pop(context);
+                                      //Navigator.pop(context);
                                     }
                                   }
                                 }

@@ -36,8 +36,9 @@ class LoginRegisterNotifier extends StateNotifier<AsyncValue<void>> {
       state = const AsyncValue.data(null);
       //ref.watch(authControllerProvider.notifier).changeAuthState();
       return true;
-    } on WooCommerceError catch (error) {
-      state = AsyncValue.error(error.message ?? "Error", StackTrace.empty);
+    } on Exception catch(error)  {
+      print("error => $error}");
+      state = AsyncValue.error(error ?? "Error", StackTrace.empty);
       return false;
     }
   }

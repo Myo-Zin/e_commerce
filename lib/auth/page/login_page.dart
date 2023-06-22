@@ -43,6 +43,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           key: _formKey,
           child: Column(
             children: [
+              const SizedBox(
+                height: 8,
+              ),
               const LogoWidget(),
               Padding(
                 padding: const EdgeInsets.all(16.0),

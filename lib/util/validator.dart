@@ -1,7 +1,7 @@
 class Validator {
   static String? valueExists(dynamic value) {
     if (value == null || value.isEmpty) {
-      return 'please fill this field';
+      return 'Please fill this field';
     } else {
       return null;
     }

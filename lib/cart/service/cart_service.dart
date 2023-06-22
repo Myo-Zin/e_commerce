@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_wp_woocommerce/models/cart_item.dart';
 import 'package:flutter_wp_woocommerce/models/product_variation.dart';
@@ -203,12 +204,46 @@ class CartService {
     urlHeader['X-WC-Store-API-Nonce'] = nonce!;
     final http.Response response = await http.delete(
         Uri.parse(
-            'https://demo.ktechnologygroup.com/wp-json/wc/store/cart/items'),
+            'https://demo.ktechnologygroup.com/wp-json/wc/store/cart/items/$key'),
+        headers: urlHeader,);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return response.body;
+    } else {
+      WooCommerceError err =
+          WooCommerceError.fromJson(json.decode(response.body));
+      throw err;
+    }
+  }
+
+  Future<WooCartItem> updateMyCartItemByKey(
+      {required String key,
+      required int id,
+      required int quantity,
+      required String token,
+      required String nonce,
+      List<WooProductVariation>? variations}) async {
+    Map<String, dynamic> data = {
+      'key': key,
+      'id': id.toString(),
+      'quantity': quantity.toString(),
+    };
+    Map<String, String> urlHeader = {
+      'Authorization': '',
+      "X-WC-Store-API-Nonce": ''
+    };
+    urlHeader['Authorization'] = 'Bearer ${token!}';
+    urlHeader['X-WC-Store-API-Nonce'] = nonce!;
+    final response = await http.put(
+        Uri.parse(
+            "https://demo.ktechnologygroup.com/wp-json/wc/store/cart/items/$key"),
         headers: urlHeader,
         body: data);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return response.body;
+      final jsonStr = json.decode(response.body);
+
+      return WooCartItem.fromJson(jsonStr);
     } else {
       WooCommerceError err =
           WooCommerceError.fromJson(json.decode(response.body));

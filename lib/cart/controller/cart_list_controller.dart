@@ -44,6 +44,25 @@ class CartListNotifier extends StateNotifier<AsyncValue<List<CartItem>>> {
     });
   }
 
+  void editQuantity(int id, int quantity) async {
+    state.whenData((list) {
+      state = AsyncData([
+        for (final cartItem in list)
+          if (cartItem.id == id)
+            cartItem.copyWith(quantity: quantity)
+          else
+            cartItem
+      ]);
+    });
+  }
+
+  void removeCart(CartItem cart) async {
+    state.whenData((list) {
+        list.remove(cart);
+      state = AsyncData(list);
+    });
+  }
+
   void selectAll(int id) {
     state.whenData((list) {
       state = AsyncData(
